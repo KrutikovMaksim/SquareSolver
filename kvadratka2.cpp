@@ -1,39 +1,16 @@
-/*
-   \brief  Программа рещающая квадратные уравнения
-
-   \param[out] x1     Первый корень квадратного уравнения
-   \param[out] x2     Второй корень квадратного уравнения
-   \param[in] a       Первый коэффицент квадратного уравнения
-   \param[in] b       Второй коэффицент квадратного уравнения
-   \param[in] c       Свободный член квадратного уравнения
-   \param[in] n_root  Количество решений квадратного уравнения
-   \param[in] n       Число, которое контролирует, чтоб при вводе a, b, c выводилась --- ERROR
-   \param[in] a1      Первый коэффицент квадратного уравнения в функции TEST_SS()
-   \param[in] b1      Второй коэффицент квадратного уравнения в функции TEST_SS()
-   \param[in] c1      Свободный член квадратного уравнения в функции TEST_SS()
-   \param[in] i       Общий счетчик количества проверок
-   \param[in] j       Счетчик для проверки случая, когда количество решений бесконечно
-   \param[in]
-   \param[in]
-   \param[in]
-
-
-
-
- */
-
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
 #include <stdlib.h>
 
-#define EPS 0.000001                           //Некоторая константа показывающая наибольшую разность между 0 и числом(чтоб избежать погрешности)
+#define EPS 0.000001                           
 #define INF_ROOT 3
 
 int Check0(double num);
 
 int SolveSquare(double a,double b,double c, double* x1, double* x2);
 
+void TEST_SS1();
 void TEST_SS();
 
 int main(void)
@@ -43,7 +20,7 @@ int main(void)
     double a = 0, b = 0, c = 0;
     printf("# Enter a b c: ");
 
-    if (scanf("%lg %lg %lg", &a, &b, &c) == 3)   //проверяет чтоб было введено 3 числа
+    if (scanf("%lg %lg %lg", &a, &b, &c) == 3)   
         n = 3;
 
     double x1 = 0, x2 = 0;
@@ -75,7 +52,7 @@ int main(void)
     return 0;
 }
 
-
+/*
 int SolveSquare(double a,double b,double c, double* x1, double* x2)
 {
     if (Check0(a))
@@ -148,7 +125,7 @@ int SolveSquare(double a,double b,double c, double* x1, double* x2)
 }
 
 
-/*void TEST_SS()
+void TEST_SS1()
 {
     double x1 = 0, x2 = 0;
     int n_root = SolveSquare(0, 0, 0, &x1, &x2);
@@ -193,9 +170,9 @@ int SolveSquare(double a,double b,double c, double* x1, double* x2)
     x1 = 0, x2 = 0;
     n_root = SolveSquare(1, -5, 6, &x1, &x2);
     assert (n_root == 2 && x1 == 2 && x2 == 3);
-} */
+} 
 
-void TEST_SS()                                            //проверяет корни уравнения при рандомных коэффицентах
+void TEST_SS()                                            
 {
     double x1 = 0, x2 = 0;
     int i = 0;
@@ -211,13 +188,13 @@ void TEST_SS()                                            //проверяет корни урав
         int n_root = SolveSquare(a1, b1, c1, &x1, &x2);
 
         if (n_root == 2)
-            if (!(Check0((a1*x1*x1 + b1*x1 + c1)) && Check0((a1*x2*x2 + b1*x2 + c1))))          //проверка если уранение имеет 2 корня
+            if (!(Check0((a1*x1*x1 + b1*x1 + c1)) && Check0((a1*x2*x2 + b1*x2 + c1))))          
             {
                 printf("FALED: a1 = %d, b1 = %d, c1 = %d, x1 = %lg, x2 = %lg, SS1 - %lg, SS2 - %lg\n", a1, b1, c1, x1, x2, a1*x1*x1 + b1*x1 + c1, a1*x2*x2 + b1*x2 + c1);
             }
             //assert((a1*x1*x1 + b1*x1 + c1) == 0 && (a1*x2*x2 + b1*x2 + c1) == 0);
 
-        if (n_root == 1)                                                                       //проверка если уравнение имеет 1 корень
+        if (n_root == 1)                                                                       
             if (!(Check0((a1*x1*x1 + b1*x1 + c1))))
             {
                 printf("FALED: a1 = %d, b1 = %d, c1 = %d, x1 = %lg, SS1 - %lg\n", a1, b1, c1, x1, a1*x1*x1 + b1*x1 + c1);
@@ -225,12 +202,12 @@ void TEST_SS()                                            //проверяет корни урав
 
             //assert(Check0((a1*x1*x1 + b1*x1 + c1)));
 
-        if (n_root == INF_ROOT)                                                                //проверка если уравнение имеет бесконечно корней
+        if (n_root == INF_ROOT)                                                                
         {
             int x_1 = 0;
             int j = 0;
 
-            while (j++ < 3)        //3 проверки, поскольку если квадратное уравнение если имеет больше 2 корней, значит их бесконечно
+            while (j++ < 3)        
             {
                 x_1 = rand() % 51 + -25;
                 if (!(Check0((a1*x_1*x_1 + b1*x_1 + c1))))
@@ -246,10 +223,11 @@ void TEST_SS()                                            //проверяет корни урав
 
 }
 
-int Check0(double num)                                    //проверяет близкие к 0 значения для операций * == 0 и * != 0 для чисел с плавающей точкой
+int Check0(double num)                                    
 {
     if (num < EPS && num > -EPS)
         return 1;
     else
         return 0;
 }
+*/
