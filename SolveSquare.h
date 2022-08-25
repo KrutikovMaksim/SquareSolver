@@ -1,3 +1,7 @@
+#include "Check0.h"
+
+#define INF_ROOT 3
+
 int SolveSquare(double a,double b,double c, double* x1, double* x2)
 {
     if (Check0(a))
